@@ -6,7 +6,7 @@ use solana_program::{
     program_error::ProgramError,
     pubkey::Pubkey, instruction::{AccountMeta, Instruction}, program::{invoke_signed},
 };
-
+use solana_program::msg;
 // Declare and export the program's entrypoint
 entrypoint!(process_instruction);
 
@@ -16,6 +16,7 @@ pub fn process_instruction(
     accounts: &[AccountInfo], // The account to say hello to
     instruction_data: &[u8], // Ignored, all helloworld instructions are hellos
 ) -> ProgramResult {
+    msg!("Instruction:  Serum Swap");
     let account_info_iter = &mut accounts.iter();
     let source_liquidity_info = next_account_info(account_info_iter)?;
     let destination_collateral_info = next_account_info(account_info_iter)?;
@@ -31,7 +32,8 @@ pub fn process_instruction(
     let create_account=next_account_info(account_info_iter)?;
     let solend_program_id=next_account_info(account_info_iter)?;
     let nonce=instruction_data[1];
-    let liquidity_amount=instruction_data[0] as u64;
+    //let liquidity_amount=instruction_data[0] as u64;
+    let liquidity_amount: u64=10000;
     let mut buf = Vec::new();
     let mut vac_accounts = Vec::new();
     let signature_seeds = [&create_account.key.to_bytes()[..32], &[nonce]];
@@ -80,7 +82,8 @@ pub fn process_instruction(
             solend_program_id.clone()],
         signers
     )?;
-    
+       
+
     Ok(())
 }
 
