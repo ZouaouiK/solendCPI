@@ -1,0 +1,1 @@
+/Users/khouloud/Desktop/khouloud/solend/solendCPI/refreshobligation/target/bpfel-unknown-unknown/release/librefreshobligation.rlib: /Users/khouloud/Desktop/khouloud/solend/solendCPI/refreshobligation/src/lib.rs
