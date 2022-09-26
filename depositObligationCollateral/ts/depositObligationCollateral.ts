@@ -1,8 +1,8 @@
 import { Account, Connection, PublicKey, sendAndConfirmTransaction, SystemProgram, SYSVAR_RENT_PUBKEY, Transaction, TransactionInstruction, LAMPORTS_PER_SOL, SYSVAR_CLOCK_PUBKEY } from "@solana/web3.js";
 import { TOKEN_PROGRAM_ID, Token, ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import BN from 'bn.js';
-export async function depositReserveLiquitiy() {
-  let programId = new PublicKey("3BwVKR6ycyjThGkwzbAKwCJ5T6kUsiiY7yf1zu4xSzYp")
+export async function depositObligationCollateral() {
+  let programId = new PublicKey("F7P36ZUZnD6uTb2Y9i8ayM98z2z8dwyVebSKnbVfNiKu")
   const connection = new Connection('https://api.devnet.solana.com', {
     commitment: "finalized",
   });
@@ -50,18 +50,19 @@ const rentExempt = await Token.getMinBalanceRentForExemptAccount(
   connection
 );
 
+ //const sendAction = "mint";
 
   //let userTokenAccountAddress=new PublicKey("6j2K9u91p68nySHzTbTyQHKpkqDWzGjz4U2gSvTLtmvQ");
   let userCollateralAccountAddress = new PublicKey("DymaqucGEGZSDc1V8wgbCyDUphRcWm17qmhc3sLhRXtF");
+  let collateralSupplyAddress = new PublicKey("J5KGpESS8Zq2MvK4rtL6wKbeMRYZzb6TEzn8qPsZFgGd");
   let reserveAddress = new PublicKey("5VVLD7BQp8y3bTgyF5ezm1ResyMTR3PhYsT4iHFU8Sxz");
-  let reserveLiquidityAddress = new PublicKey("furd3XUtjXZ2gRvSsoUts9A5m8cMJNqdsyR2Rt8vY9s");
-  let reserveCollateralMintAddress = new PublicKey("FzwZWRMc3GCqjSrcpVX3ueJc6UpcV6iWWb7ZMsTXE3Gf");
+  let obligationAddress = new PublicKey("42S5nJQK18VxPoFyN2GbK1HSzLowvzxcjVjDEwYqLtiX");
   let lendingMarketAddress = new PublicKey("GvjoVKNjBvQcFaSKUW1gTE7DxhSpjHbE69umVR5nPuQp");
-  let lendingMarketAuthorityAddress = new PublicKey("EhJ4fwaXUp7aiwvZThSUaGWCaBQAJe3AEaJJJVCn3UCK");
+  let obligationOwnerAddress = new PublicKey("2YUuxfmRCAN1xxJvedMcTbfhSJzLq4Zb4yZXNaEDen55");
   let transferAuthority = account.publicKey;
   let solendProgramID = new PublicKey("ALend7Ketfx5bxh6ghsCDXAoDrhvEmsXT3cynB6aPLgx");
-  // let liquidityAmount=new BN("1000");
-  let liquidityAmount = 100000;
+  // let collateralAmount=new BN("1000");
+  let collateralAmount = 1000;
 
   let create_account = new Account();
   let [authority, nonce] = await PublicKey.findProgramAddress(
@@ -69,17 +70,16 @@ const rentExempt = await Token.getMinBalanceRentForExemptAccount(
     programId,
   );
 
-  console.log("auth ", authority.toBase58())
+  console.log("authority ", authority.toBase58())
   const transaction = new Transaction();
 
   const keys = [
-    { pubkey: userTokenAccountAddress, isSigner: false, isWritable: true },//sourceLiquidity
-    { pubkey: userCollateralAccountAddress, isSigner: false, isWritable: true },//destinationCollateral
-    { pubkey: reserveAddress, isSigner: false, isWritable: true },
-    { pubkey: reserveLiquidityAddress, isSigner: false, isWritable: true },
-    { pubkey: reserveCollateralMintAddress, isSigner: false, isWritable: true },
+    { pubkey: userCollateralAccountAddress, isSigner: false, isWritable: true }, //sourceCollateral
+    { pubkey: collateralSupplyAddress, isSigner: false, isWritable: true }, //destinationCollateral
+    { pubkey: reserveAddress, isSigner: false, isWritable: true }, //depositReserve
+    { pubkey: obligationAddress, isSigner: false, isWritable: true },
     { pubkey: lendingMarketAddress, isSigner: false, isWritable: false },
-    { pubkey: lendingMarketAuthorityAddress, isSigner: false, isWritable: false },
+    { pubkey: obligationOwnerAddress, isSigner: true, isWritable: false },
     { pubkey: transferAuthority, isSigner: true, isWritable: false },
     { pubkey: SYSVAR_CLOCK_PUBKEY, isSigner: false, isWritable: false },
     { pubkey: TOKEN_PROGRAM_ID, isSigner: false, isWritable: false },
@@ -92,10 +92,10 @@ const rentExempt = await Token.getMinBalanceRentForExemptAccount(
   const instruction = new TransactionInstruction({
     keys,
     programId,
-    data: Buffer.from([liquidityAmount, nonce]), // All instructions are hellos
+    data: Buffer.from([collateralAmount, nonce]), // All instructions are hellos
   });
   transaction.add(instruction);
-  console.log(account.publicKey.toBase58())
+  console.log("account.publicKey"+account.publicKey.toBase58())
   let accountInfo = await connection.getAccountInfo(account.publicKey)
   console.log(accountInfo)
   let tx = await sendAndConfirmTransaction(
@@ -103,5 +103,5 @@ const rentExempt = await Token.getMinBalanceRentForExemptAccount(
     transaction,
     [account],
   );
-  console.log("TX deposit reserve :", tx)
+  console.log("TX deposit Obligation Collateral :", tx)
 }
