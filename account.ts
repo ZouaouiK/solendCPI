@@ -1,0 +1,1 @@
+export const privateKey ="Entre your private Key"
