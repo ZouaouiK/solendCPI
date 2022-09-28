@@ -31,8 +31,8 @@ pub fn process_instruction(
     let create_account=next_account_info(account_info_iter)?;
     let solend_program_id=next_account_info(account_info_iter)?;
     let nonce=instruction_data[1];
-    //let collateral_amount=instruction_data[0] as u64;
-    let collateral_amount: u64=10000;
+    let collateral_amount=instruction_data[0] as u64;
+    //let collateral_amount: u64=10000;
     let mut buf = Vec::new();
     let mut vac_accounts = Vec::new();
     let signature_seeds = [&create_account.key.to_bytes()[..32], &[nonce]];
