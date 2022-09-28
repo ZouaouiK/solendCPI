@@ -16,22 +16,27 @@ pub fn process_instruction(
     accounts: &[AccountInfo], // The account to say hello to
     instruction_data: &[u8], // Ignored, all helloworld instructions are hellos
 ) -> ProgramResult {
-    msg!("Instruction:  Serum Swap borrowObligationLiquidity");
+    msg!("Instruction: deposit Reserve Liquidity And Obligation Collateral Serum Swap");
     let account_info_iter = &mut accounts.iter();
     let source_liquidity_info = next_account_info(account_info_iter)?;
-    let destination_liquidity_info = next_account_info(account_info_iter)?;
-    let borrow_reserve_info = next_account_info(account_info_iter)?;
-    let borrow_reserve_liquidity_fee_receiver_info = next_account_info(account_info_iter)?;
-    let obligation_info = next_account_info(account_info_iter)?;
+    let user_collateral_info = next_account_info(account_info_iter)?;
+    let reserve_info = next_account_info(account_info_iter)?;
+    let reserve_liquidity_supply_info = next_account_info(account_info_iter)?;
+    let reserve_collateral_mint_info = next_account_info(account_info_iter)?;
     let lending_market_info = next_account_info(account_info_iter)?;
     let lending_market_authority_info = next_account_info(account_info_iter)?;
+    let destination_collateral_info = next_account_info(account_info_iter)?;
+    let obligation_info = next_account_info(account_info_iter)?;
     let obligation_owner_info = next_account_info(account_info_iter)?;
+    let _pyth_price_info = next_account_info(account_info_iter)?;
+    let _switchboard_feed_info = next_account_info(account_info_iter)?;
+    let user_transfer_authority_info = next_account_info(account_info_iter)?;
     let clock = next_account_info(account_info_iter)?;
     let token_program_id = next_account_info(account_info_iter)?;
     let authority=next_account_info(account_info_iter)?;
     let create_account=next_account_info(account_info_iter)?;
     let solend_program_id=next_account_info(account_info_iter)?;
-    let nonce=instruction_data[0];
+    let nonce=instruction_data[1];
     //let liquidity_amount=instruction_data[0] as u64;
     let liquidity_amount: u64=10000;
     let mut buf = Vec::new();
@@ -48,17 +53,22 @@ pub fn process_instruction(
     if *authority.key != expected_allocated_key {
         return Err(ProgramError::InvalidArgument);
     } 
-    buf.push(10);
+    buf.push(14);
     buf.extend_from_slice(&liquidity_amount.to_le_bytes());
-    msg!("Instruction:  111111111111:{}",nonce);
+
     vac_accounts.push(AccountMeta::new(*source_liquidity_info.key, false));
-    vac_accounts.push(AccountMeta::new(*destination_liquidity_info.key, false));
-    vac_accounts.push(AccountMeta::new(*borrow_reserve_info.key, false));
-    vac_accounts.push(AccountMeta::new(*borrow_reserve_liquidity_fee_receiver_info.key, false));
-    vac_accounts.push(AccountMeta::new(*obligation_info.key, false));
+    vac_accounts.push(AccountMeta::new(*user_collateral_info.key, false));
+    vac_accounts.push(AccountMeta::new(*reserve_info.key, false));
+    vac_accounts.push(AccountMeta::new(*reserve_liquidity_supply_info.key, false));
+    vac_accounts.push(AccountMeta::new(*reserve_collateral_mint_info.key, false));
     vac_accounts.push(AccountMeta::new_readonly(*lending_market_info.key, false));
     vac_accounts.push(AccountMeta::new_readonly(*lending_market_authority_info.key, false));
-    vac_accounts.push(AccountMeta::new_readonly(*obligation_owner_info.key, true));
+    vac_accounts.push(AccountMeta::new(*destination_collateral_info.key, false));
+    vac_accounts.push(AccountMeta::new(*obligation_info.key, false));
+    vac_accounts.push(AccountMeta::new(*obligation_owner_info.key, true));
+    vac_accounts.push(AccountMeta::new_readonly(*_pyth_price_info.key, false));
+    vac_accounts.push(AccountMeta::new_readonly(*_switchboard_feed_info.key, false));
+    vac_accounts.push(AccountMeta::new_readonly(*user_transfer_authority_info.key, true));
     vac_accounts.push(AccountMeta::new_readonly(*clock.key, false));
     vac_accounts.push(AccountMeta::new_readonly(*token_program_id.key, false));
     let ix = Instruction {
@@ -66,18 +76,22 @@ pub fn process_instruction(
         program_id: *solend_program_id.key,
         data: buf,
     };
-    msg!("Instruction:  Serum Swap borrowObligationLiquidity************444444");
-     invoke_signed(
+    invoke_signed(
         &ix,
         &[
             source_liquidity_info.clone(),
-            destination_liquidity_info.clone(),
-            borrow_reserve_info.clone(),
-            borrow_reserve_liquidity_fee_receiver_info.clone(),
-            obligation_info.clone(),
+            user_collateral_info.clone(),
+            reserve_info.clone(),
+            reserve_liquidity_supply_info.clone(),
+            reserve_collateral_mint_info.clone(),
             lending_market_info.clone(),
             lending_market_authority_info.clone(),
+            destination_collateral_info.clone(),
+            obligation_info.clone(),
             obligation_owner_info.clone(),
+            _pyth_price_info.clone(),
+            _switchboard_feed_info.clone(),
+            user_transfer_authority_info.clone(),
             clock.clone(),
             token_program_id.clone(),
             solend_program_id.clone()],
