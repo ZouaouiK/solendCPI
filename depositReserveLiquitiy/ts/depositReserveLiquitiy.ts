@@ -2,11 +2,10 @@ import { Account, Connection, PublicKey, sendAndConfirmTransaction, SystemProgra
 import { TOKEN_PROGRAM_ID, Token, ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import BN from 'bn.js';
 export async function depositReserveLiquitiy() {
-  let programId = new PublicKey("3BwVKR6ycyjThGkwzbAKwCJ5T6kUsiiY7yf1zu4xSzYp")
-  const connection = new Connection('https://api.devnet.solana.com', {
+  let programId = new PublicKey("5msg8QYLooeawWsWFqmaVxPbEo3GeMpD94nd3oQSLLLb")
+  const connection = new Connection('https://api.mainnet-beta.solana.com', {
     commitment: "finalized",
   });
-  //let account = new Account([203, 214, 234, 196, 65, 154, 197, 110, 86, 88, 245, 158, 243, 187, 244, 115, 70, 166, 74, 27, 108, 253, 132, 166, 11, 146, 149, 175, 250, 145, 18, 164, 218, 191, 205, 244, 153, 50, 70, 218, 149, 83, 58, 170, 85, 19, 18, 229, 204, 64, 179, 163, 74, 137, 247, 163, 15, 142, 223, 28, 168, 124, 248, 130]);
   let account = new Account([100,20,230,37,235,65,189,181,77,36,75,183,186,81,40,0,72,14,113,158,77,68,43,36,30,4,204,68,66,32,16,194,22,236,64,226,33,29,106,20,204,149,203,95,186,204,144,172,228,228,195,16,218,163,59,237,147,240,235,175,87,58,142,168])
 
   console.log(" hello solend ", account.publicKey.toBase58());
