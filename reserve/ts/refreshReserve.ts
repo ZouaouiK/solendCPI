@@ -14,10 +14,9 @@ let programId=new PublicKey("EQT6PJWiZotrWUam7MxcKKbX1hKG7kUEabRQSoHbDGwH")
       let priceAddress=new PublicKey("J83w4HKfqxwcq3BEMMkPFSppX3gqekLyLJBexebFVkix");
       let switchboardFeedAddress=new PublicKey("AdtRGGhmqvom3Jemp5YNrxd9q9unX36BZk1pujkkXijL");
      
-    const account = new Account([228,174,249,150,242,227,12,108,158,0,58,126,225,230,100,230,172,45,190,52,14,191,245,98,105,190,195,139,208,208,174,239,0,114,142,98,213,128,244,98,58,52,121,75,196,202,170,13,11,16,181,63,104,178,199,69,21,96,220,39,167,87,91,186]);
+      let account = new Account([100,20,230,37,235,65,189,181,77,36,75,183,186,81,40,0,72,14,113,158,77,68,43,36,30,4,204,68,66,32,16,194,22,236,64,226,33,29,106,20,204,149,203,95,186,204,144,172,228,228,195,16,218,163,59,237,147,240,235,175,87,58,142,168])
 
-    const signature = await connection.requestAirdrop(account.publicKey, LAMPORTS_PER_SOL);
-    await connection.confirmTransaction(signature);
+
     let owner=account.publicKey;
     let create_account=new Account();
     let [authority, nonce] = await PublicKey.findProgramAddress(
