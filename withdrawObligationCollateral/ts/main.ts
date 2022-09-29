@@ -1,9 +1,11 @@
-import { withdrawObligationCollateralInstruction } from "./withdrawObligation"
+import { withdrawObligationCollateralInstruction, withdrawObligationCollateralInstructionWithMainnet } from "./withdrawObligation"
 
 
 
 async function main(){
-//  Sets the new owner of a lending market.
-    await withdrawObligationCollateralInstruction()
+
+   console.log("********Mainnet********") 
+   await withdrawObligationCollateralInstructionWithMainnet()
+
 }
 main()
