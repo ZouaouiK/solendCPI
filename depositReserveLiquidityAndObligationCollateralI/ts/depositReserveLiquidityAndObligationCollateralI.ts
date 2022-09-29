@@ -1,7 +1,7 @@
 import { Account, Connection, PublicKey, sendAndConfirmTransaction, SystemProgram, SYSVAR_RENT_PUBKEY, Transaction, TransactionInstruction, LAMPORTS_PER_SOL, SYSVAR_CLOCK_PUBKEY } from "@solana/web3.js";
 import { TOKEN_PROGRAM_ID, Token, ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/spl-token';
-import { privateKey } from "../../accouna";
-
+import BN from 'bn.js';
+import { privateKey } from "../../account";
 export async function depositReserveLiquidityAndObligationCollateralI() {
   let programId = new PublicKey("HnqntdM6m6y5xYZKTxhfZYqx6ps2w9GRwGf4YogQXrZE")
   const connection = new Connection('https://api.devnet.solana.com', {
@@ -34,11 +34,9 @@ export async function depositReserveLiquidityAndObligationCollateralI() {
           new Transaction().add(createUserTokenAccountIx),
           [account],
         );
-console.log("initialize ata : ", createATATxn)
    
     }
   // console.log("userTokenAccountAddress ",userTokenAccountAddress.toBase58())
- let token = new Token(connection,tokenMint,TOKEN_PROGRAM_ID,account);
 //let userTokenAccountAddress = await token.createAccount(account.publicKey);
 console.log("userTokenAccountAddress ",userTokenAccountAddress.toBase58())
 
