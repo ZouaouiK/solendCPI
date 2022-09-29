@@ -1,13 +1,13 @@
 import { Account, Connection, PublicKey, sendAndConfirmTransaction, SystemProgram, SYSVAR_RENT_PUBKEY, Transaction, TransactionInstruction, LAMPORTS_PER_SOL, SYSVAR_CLOCK_PUBKEY } from "@solana/web3.js";
 import { TOKEN_PROGRAM_ID, Token, ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import BN from 'bn.js';
+import { privateKey } from "../../account";
 export async function refreshObligation() {
   let programId = new PublicKey("6MA7PEj1gUX1J8ja9tnZGy5WVQdTjgLZ47UTdz7Rt1N2")
   const connection = new Connection('https://api.devnet.solana.com', {
     commitment: "finalized",
   });
-  //let account = new Account([203, 214, 234, 196, 65, 154, 197, 110, 86, 88, 245, 158, 243, 187, 244, 115, 70, 166, 74, 27, 108, 253, 132, 166, 11, 146, 149, 175, 250, 145, 18, 164, 218, 191, 205, 244, 153, 50, 70, 218, 149, 83, 58, 170, 85, 19, 18, 229, 204, 64, 179, 163, 74, 137, 247, 163, 15, 142, 223, 28, 168, 124, 248, 130]);
-  let account = new Account([100,20,230,37,235,65,189,181,77,36,75,183,186,81,40,0,72,14,113,158,77,68,43,36,30,4,204,68,66,32,16,194,22,236,64,226,33,29,106,20,204,149,203,95,186,204,144,172,228,228,195,16,218,163,59,237,147,240,235,175,87,58,142,168])
+  let account = new Account(privateKey)
 
 
   let tokenMint = new PublicKey("So11111111111111111111111111111111111111112");

@@ -1,5 +1,6 @@
 import { Account,Connection, PublicKey, sendAndConfirmTransaction, SystemProgram, SYSVAR_RENT_PUBKEY, Transaction, TransactionInstruction, LAMPORTS_PER_SOL, SYSVAR_CLOCK_PUBKEY } from "@solana/web3.js";
 import {  TOKEN_PROGRAM_ID } from '@solana/spl-token';
+import { privateKey } from "../../account";
 
 export async function RefreshReserve(){
 let programId=new PublicKey("EQT6PJWiZotrWUam7MxcKKbX1hKG7kUEabRQSoHbDGwH")
@@ -14,7 +15,7 @@ let programId=new PublicKey("EQT6PJWiZotrWUam7MxcKKbX1hKG7kUEabRQSoHbDGwH")
       let priceAddress=new PublicKey("J83w4HKfqxwcq3BEMMkPFSppX3gqekLyLJBexebFVkix");
       let switchboardFeedAddress=new PublicKey("AdtRGGhmqvom3Jemp5YNrxd9q9unX36BZk1pujkkXijL");
      
-      let account = new Account([100,20,230,37,235,65,189,181,77,36,75,183,186,81,40,0,72,14,113,158,77,68,43,36,30,4,204,68,66,32,16,194,22,236,64,226,33,29,106,20,204,149,203,95,186,204,144,172,228,228,195,16,218,163,59,237,147,240,235,175,87,58,142,168])
+      let account = new Account(privateKey)
 
 
     let owner=account.publicKey;
