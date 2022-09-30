@@ -3,7 +3,8 @@ import { withdrawObligationCollateralInstruction, withdrawObligationCollateralIn
 
 
 async function main(){
-
+   //console.log("********Devnet********") 
+  // await withdrawObligationCollateralInstruction()
    console.log("********Mainnet********") 
    await withdrawObligationCollateralInstructionWithMainnet()
 
