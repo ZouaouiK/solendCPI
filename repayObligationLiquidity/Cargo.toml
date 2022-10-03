@@ -1,5 +1,5 @@
 [package]
-name = "withdraw_obligation_collateral"
+name = "repayObligationLiquidity"
 version = "0.1.0"
 edition = "2021"
 
@@ -11,6 +11,6 @@ solana-program = "~1.8.14"
 
 
 [lib]
-name = "withdraw_obligation_collateral"
+name = "repayObligationLiquidity"
 crate-type = ["cdylib", "lib"]
 

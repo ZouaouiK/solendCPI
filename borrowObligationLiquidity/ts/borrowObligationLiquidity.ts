@@ -1,17 +1,26 @@
-import { Account, Connection, PublicKey, sendAndConfirmTransaction, SystemProgram, SYSVAR_RENT_PUBKEY, Transaction, TransactionInstruction, LAMPORTS_PER_SOL, SYSVAR_CLOCK_PUBKEY } from "@solana/web3.js";
-import { TOKEN_PROGRAM_ID, Token, ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/spl-token';
+import { Account, Connection, PublicKey, sendAndConfirmTransaction, Transaction, TransactionInstruction, LAMPORTS_PER_SOL, SYSVAR_CLOCK_PUBKEY } from "@solana/web3.js";
+import { TOKEN_PROGRAM_ID, ASSOCIATED_TOKEN_PROGRAM_ID, Token } from '@solana/spl-token';
 import BN from 'bn.js';
-import { privateKey } from "../../accountx";
-export async function borrowObligationLiquidity() {
-  let programId = new PublicKey("8MRKZuaWZxx7GhfU44u5zcQwEYC5kM3Tx1VHQ1mWzfBL")
-  const connection = new Connection('https://api.devnet.solana.com', {
+import { privateKey } from "../../account";
+import { refreshObligationInstruction } from "./instructionRefreshObligation";
+import { refreshReserveInstruction } from "./instructionRefreshReserve";
+
+export async function borrowObligationLiquidityWithMainnet() {
+  let programId = new PublicKey("H6Rqk4TNb1sJbWXnBDz7Es457rvEnggceuZZUZmggYGh")
+  const connection = new Connection('https://api.mainnet-beta.solana.com', {
     commitment: "finalized",
   });
-  let account = new Account(privateKey)
 
-  console.log(" hello solend ", account.publicKey.toBase58());
+
+  const account = new Account(privateKey);
+  let reverseAddress = new PublicKey("8PbodeaosQP19SjYFx855UMqWxH2HynZLdBXmsrbac36");
+  let solendId = new PublicKey("So1endDq2YkqhipRh3WViPa8hdiSpxWy6z3Z6tMCpAo");
+  let priceAddress = new PublicKey("H6ARHf6YXhGYeQfUzQNGk6rDNnLBQKrenN712K4AQJEG");
+  let switchboardFeedAddress = new PublicKey("AdtRGGhmqvom3Jemp5YNrxd9q9unX36BZk1pujkkXijL");
+  let lendingProgramid = new PublicKey("So1endDq2YkqhipRh3WViPa8hdiSpxWy6z3Z6tMCpAo");
   let tokenMint = new PublicKey("So11111111111111111111111111111111111111112");
-   let userTokenAccountAddress = await Token.getAssociatedTokenAddress(
+
+  let userTokenAccountAddress = await Token.getAssociatedTokenAddress(
     ASSOCIATED_TOKEN_PROGRAM_ID,
     TOKEN_PROGRAM_ID,
     tokenMint,
@@ -42,73 +51,63 @@ console.log("initialize ata : ", createATATxn)
 //let userTokenAccountAddress = await token.createAccount(account.publicKey);
 console.log("userTokenAccountAddress ",userTokenAccountAddress.toBase58())
 
-const userWSOLAccountInfo = await connection.getAccountInfo(
-  userTokenAccountAddress
-); 
+  let sourceLiquidity = new PublicKey("8UviNr47S8eL6J3WfDxMRa3hvLta1VDJwNWqsDgtN3Cv");
+  let destinationLiquidity = new PublicKey("6YWQ6NP1M97jTrE7LjetVS898cB9X28AzEecB9APUH7S");
+  let borrowReserve = new PublicKey("8PbodeaosQP19SjYFx855UMqWxH2HynZLdBXmsrbac36");
+  let borrowReserveLiquidityFeeReceiver = new PublicKey("5wo1tFpi4HaVKnemqaXeQnBEpezrJXcXvuztYaPhvgC7");
+  let obligation = new PublicKey("GQocG58f4hfkgj8Q8hjWLznv4TyMQFqf8Z5XDBjAEQbY");
+  let lendingMarket = new PublicKey("4UpD2fh7xH3VP9QQaXtsS1YY3bxzWhtfpks7FatyKvdY");
+  let lendingMarketAuthority = new PublicKey("DdZR6zRFiUt4S5mg7AV1uKB2z1f1WzcNYCaTEEWPAuby");
 
-const rentExempt = await Token.getMinBalanceRentForExemptAccount(
-  connection
-);
 
+  
 
-  let liquidityAddress= new PublicKey("furd3XUtjXZ2gRvSsoUts9A5m8cMJNqdsyR2Rt8vY9s")// fix 
-  //let userTokenAccountAddress= new PublicKey("6j2K9u91p68nySHzTbTyQHKpkqDWzGjz4U2gSvTLtmvQ")//
-  let reserveAddress= new PublicKey("5VVLD7BQp8y3bTgyF5ezm1ResyMTR3PhYsT4iHFU8Sxz")//
-  let reserveLiquidityFeeReceiverAddress= new PublicKey("5kFqzU2k1tEXtoeNayk1TVxLycoAH5k8WsaGnBnanYJH")//
-  //let obligationAddress= new PublicKey("42S5nJQK18VxPoFyN2GbK1HSzLowvzxcjVjDEwYqLtiX")//
-  let lendingMarketAddress= new PublicKey("GvjoVKNjBvQcFaSKUW1gTE7DxhSpjHbE69umVR5nPuQp")//
-  let lendingMarketAuthorityAddress= new PublicKey("EhJ4fwaXUp7aiwvZThSUaGWCaBQAJe3AEaJJJVCn3UCK")//
-  //let obligationOwnerAddress= new PublicKey("2YUuxfmRCAN1xxJvedMcTbfhSJzLq4Zb4yZXNaEDen55")// obligationOwner same transferAuthority
-  let transferAuthority = account.publicKey;
-  let solendProgramID = new PublicKey("ALend7Ketfx5bxh6ghsCDXAoDrhvEmsXT3cynB6aPLgx");
-  // let liquidityAmount=new BN("1000");
-  //let liquidityAmount = 0;
-
-  let create_account = new Account();
-  let [authority, nonce] = await PublicKey.findProgramAddress(
-    [create_account.publicKey.toBuffer()],
-    programId,
+  const refreshReserveIx = refreshReserveInstruction(
+    reverseAddress,
+    solendId,
+    priceAddress,
+    switchboardFeedAddress
   );
-  const seed = lendingMarketAddress.toBase58().slice(0, 32);
-
-  const obligationAddress = await PublicKey.createWithSeed(
-    account.publicKey,
-    seed,
-    solendProgramID
+  const refreshObligationIx = refreshObligationInstruction(
+    obligation,
+    [new PublicKey("8PbodeaosQP19SjYFx855UMqWxH2HynZLdBXmsrbac36")],
+    [new PublicKey("8PbodeaosQP19SjYFx855UMqWxH2HynZLdBXmsrbac36")],
+    solendId
   );
-  console.log("authority **********", authority.toBase58())
   const transaction = new Transaction();
+  transaction.add(refreshReserveIx, refreshObligationIx);
+
+
+
+
+
+
 
   const keys = [
-    { pubkey: liquidityAddress, isSigner: false, isWritable: true },//sourceLiquidity
-    { pubkey: userTokenAccountAddress, isSigner: false, isWritable: true },//destinationLiquidity
-    { pubkey: reserveAddress, isSigner: false, isWritable: true }, //borrowReserve
-    { pubkey: reserveLiquidityFeeReceiverAddress, isSigner: false, isWritable: true }, //borrowReserveLiquidityFeeReceiver
-    { pubkey: obligationAddress, isSigner: false, isWritable: true }, // obligation
-    { pubkey: lendingMarketAddress, isSigner: false, isWritable: false },
-    { pubkey: lendingMarketAuthorityAddress, isSigner: false, isWritable: false },
-    { pubkey: transferAuthority, isSigner: true, isWritable: false },
+    { pubkey: sourceLiquidity, isSigner: false, isWritable: true },
+    { pubkey: userTokenAccountAddress, isSigner: false, isWritable: true },
+    { pubkey: borrowReserve, isSigner: false, isWritable: false },
+    { pubkey: borrowReserveLiquidityFeeReceiver, isSigner: false, isWritable: true },
+    { pubkey: obligation, isSigner: false, isWritable: true },
+    { pubkey: lendingMarket, isSigner: false, isWritable: false },
+    { pubkey: lendingMarketAuthority, isSigner: false, isWritable: false },
+    { pubkey: account.publicKey, isSigner: true, isWritable: false },
     { pubkey: SYSVAR_CLOCK_PUBKEY, isSigner: false, isWritable: false },
     { pubkey: TOKEN_PROGRAM_ID, isSigner: false, isWritable: false },
-    { pubkey: authority, isSigner: false, isWritable: false },
-    { pubkey: create_account.publicKey, isSigner: false, isWritable: false },
-    { pubkey: solendProgramID, isSigner: false, isWritable: false },
+    { pubkey: lendingProgramid, isSigner: false, isWritable: false },
+
   ];
 
-console.log("programId********"+programId.toBase58())
   const instruction = new TransactionInstruction({
     keys,
     programId,
-    data: Buffer.from([ nonce]), // All instructions are hellos
+    data: Buffer.alloc(0), // All instructions are hellos
   });
   transaction.add(instruction);
-  console.log(account.publicKey.toBase58())
-  let accountInfo = await connection.getAccountInfo(account.publicKey)
-  console.log(accountInfo)
   let tx = await sendAndConfirmTransaction(
     connection,
     transaction,
     [account],
   );
-  console.log("TX deposit reserve :", tx)
+  console.log("TX brow Obligation Collateral Instruction With Mainnet : ", tx)
 }
