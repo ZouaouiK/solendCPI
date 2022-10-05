@@ -106,7 +106,7 @@ const rentExempt = await Token.getMinBalanceRentForExemptAccount(
   console.log("TX deposit reserve :", tx)
 }
 export async function redeemReserveCollateralWithMainnet() {
-  let programId = new PublicKey("GLdZTcbvgA5kyuyFcrGi9YTzRjRAnnYtN1fijK8Lrpru")
+  let programId = new PublicKey("4jboXeejSrHiGMZDnWu3qWXp3gx1JK8mzbD51oVoTgCE")
   const connection = new Connection('https://api.mainnet-beta.solana.com', {
     commitment: "finalized",
   });
@@ -152,7 +152,7 @@ export async function redeemReserveCollateralWithMainnet() {
   let transferAuthority = account.publicKey;
   let solendProgramID = new PublicKey("So1endDq2YkqhipRh3WViPa8hdiSpxWy6z3Z6tMCpAo");
   // let liquidityAmount=new BN("1000");
-  let liquidityAmount = 1000;
+  let liquidityAmount = 10000;
 
   let create_account = new Account();
   let [authority, nonce] = await PublicKey.findProgramAddress(

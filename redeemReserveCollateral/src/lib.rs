@@ -21,8 +21,8 @@ pub fn process_instruction(
     let source_collateral_info = next_account_info(account_info_iter)?;
     let destination_liquidity_info = next_account_info(account_info_iter)?;
     let reserve_info = next_account_info(account_info_iter)?;
-    let reserve_liquidity_supply_info = next_account_info(account_info_iter)?;
     let reserve_collateral_mint_info = next_account_info(account_info_iter)?;
+    let reserve_liquidity_supply_info = next_account_info(account_info_iter)?;
     let lending_market_info = next_account_info(account_info_iter)?;
     let lending_market_authority_info = next_account_info(account_info_iter)?;
     let user_transfer_authority_info = next_account_info(account_info_iter)?;
@@ -72,8 +72,8 @@ pub fn process_instruction(
             source_collateral_info.clone(),
             destination_liquidity_info.clone(),
             reserve_info.clone(),
-            reserve_liquidity_supply_info.clone(),
             reserve_collateral_mint_info.clone(),
+            reserve_liquidity_supply_info.clone(),
             lending_market_info.clone(),
             lending_market_authority_info.clone(),
             user_transfer_authority_info.clone(),
