@@ -2,8 +2,8 @@ import { Account, Connection, PublicKey, sendAndConfirmTransaction, SystemProgra
 import { TOKEN_PROGRAM_ID, Token, ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import BN from 'bn.js';
 import { privateKey } from "../../account";
-export async function depositReserveLiquidityAndObligationCollateralI() {
-  let programId = new PublicKey("HnqntdM6m6y5xYZKTxhfZYqx6ps2w9GRwGf4YogQXrZE")
+/* export async function depositReserveLiquidityAndObligationCollateralI() {
+  let programId = new PublicKey("98MvzPgeR6WK5HV4US1icZheF73z6Q1EQLiEkMouYQAk")
   const connection = new Connection('https://api.devnet.solana.com', {
     commitment: "finalized",
   });
@@ -113,10 +113,10 @@ const rentExempt = await Token.getMinBalanceRentForExemptAccount(
     [account],
   );
   console.log("TX depositReserveLiquidityAndObligation :", tx)
-}
+} */
 export async function depositReserveLiquidityAndObligationCollateralMainnet() {
   //Mainnet
- let programId = new PublicKey("65HwW5H3hsQjmTqmXp673NRcvi4DQA4bsjvDR2wLUXfH");
+ let programId = new PublicKey("7QJJ5GfSvuzxzwfLHdTLPe73amLEKX6bi1oyg2oGymQK");
  let conUrl='https://api.mainnet-beta.solana.com'
   const connection = new Connection(conUrl, {
     commitment: "finalized",
@@ -156,17 +156,18 @@ console.log("userTokenAccountAddress ",userTokenAccountAddress.toBase58())
 
 
 
-  let userCollateralAccountAddress= new PublicKey("4U4A8jE3abhBmKxCVGJpChAN2eGHs3GKbrRMh8fiSznS")
-  let reserveAddress= new PublicKey("8PbodeaosQP19SjYFx855UMqWxH2HynZLdBXmsrbac36")//
+  //let userTokenAccountAddress= new PublicKey("BR1qCPSBeyxRR9Dxi8hry8kbWz64vtx5FwDp5XP4hL3a")
+  let userCollateralAccountAddress= new PublicKey("DwbMjpyio6kW575xBdPkCTFgpMEo2cfWLeGf1iQMfgcb")
+  let reserveAddress= new PublicKey("8PbodeaosQP19SjYFx855UMqWxH2HynZLdBXmsrbac36")// no change
   let reserveLiquiditySupplyAddress= new PublicKey("8UviNr47S8eL6J3WfDxMRa3hvLta1VDJwNWqsDgtN3Cv")//
-  let reserveCollateralMintAddress= new PublicKey("5h6ssFpeDeRbzsEHDbTQNH7nVGgsKrZydxdSTnLm6QdV")
-  let lendingMarketAddress= new PublicKey("4UpD2fh7xH3VP9QQaXtsS1YY3bxzWhtfpks7FatyKvdY")
-  let lendingMarketAuthorityAddress= new PublicKey("DdZR6zRFiUt4S5mg7AV1uKB2z1f1WzcNYCaTEEWPAuby")
+  let reserveCollateralMintAddress= new PublicKey("5h6ssFpeDeRbzsEHDbTQNH7nVGgsKrZydxdSTnLm6QdV")//
+  let lendingMarketAddress= new PublicKey("4UpD2fh7xH3VP9QQaXtsS1YY3bxzWhtfpks7FatyKvdY")//
+  let lendingMarketAuthorityAddress= new PublicKey("DdZR6zRFiUt4S5mg7AV1uKB2z1f1WzcNYCaTEEWPAuby")//
   let collateralSupplyAddress= new PublicKey("B1ATuYXNkacjjJS78MAmqu8Lu8PvEPt51u4oBasH1m1g")//
-  let obligationAddress= new PublicKey("GQocG58f4hfkgj8Q8hjWLznv4TyMQFqf8Z5XDBjAEQbY")
-  let obligationOwnerAddress= new PublicKey("vqjaEKwZVk3eMa1c8i8PRmFpWrZLoK6xX1CdBxjFYuv")
+  let obligationAddress= new PublicKey("ARY5UYV5ZKSiYKeUR4UWp94cdoTZPRUYVr2omQ8SNqVF")
+  let obligationOwnerAddress= new PublicKey("2pxb5gAv7VxDCq5pDs5P8Euhki6XYDhA9FRiRMd4PxVu")
   let pythOracleAddress= new PublicKey("H6ARHf6YXhGYeQfUzQNGk6rDNnLBQKrenN712K4AQJEG")//
-  let switchboardFeedAddress= new PublicKey("AdtRGGhmqvom3Jemp5YNrxd9q9unX36BZk1pujkkXijL")//
+  let switchboardFeedAddress= new PublicKey("GvDMxPzN1sCj7L26YDK2HnMRXEQmQ2aemov8YBtPS7vR")//
   let transferAuthority = account.publicKey;
   let solendProgramID = new PublicKey("So1endDq2YkqhipRh3WViPa8hdiSpxWy6z3Z6tMCpAo");
 
@@ -214,8 +215,8 @@ console.log("userTokenAccountAddress ",userTokenAccountAddress.toBase58())
   });
   transaction.add(instruction);
   console.log(account.publicKey.toBase58())
-  let accountInfo = await connection.getAccountInfo(account.publicKey)
-  console.log(accountInfo)
+  //let accountInfo = await connection.getAccountInfo(account.publicKey)
+  //console.log(accountInfo)
   let tx = await sendAndConfirmTransaction(
     connection,
     transaction,

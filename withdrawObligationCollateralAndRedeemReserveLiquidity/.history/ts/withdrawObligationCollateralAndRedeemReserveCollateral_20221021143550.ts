@@ -5,7 +5,7 @@ import { refreshObligationInstruction } from "./instructionRefreshObligation";
 import { privateKey } from "../../account";
 
 export async function withdrawObligationCollateralAndRedeemReserveCollateralWithMainnet() {
-  let programId = new PublicKey("4ZsWsYaanMasRxcS8grvyg8N3x8T7fd8Moq6xpnMQPUV")
+  let programId = new PublicKey("WBExer6HDtU2qxbWcsahsoyHAeAJJRDzyvvDczrrqtz")
   const connection = new Connection('https://api.mainnet-beta.solana.com', {
     commitment: "finalized",
   });
