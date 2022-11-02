@@ -29,12 +29,38 @@ import {
       data
     );
   
+    let obligation1= new PublicKey("ARY5UYV5ZKSiYKeUR4UWp94cdoTZPRUYVr2omQ8SNqVF")
+    let solendProgramAddress1= new PublicKey("So1endDq2YkqhipRh3WViPa8hdiSpxWy6z3Z6tMCpAo")//
+    
     const keys = [
-      { pubkey: obligation, isSigner: false, isWritable: true },
+      { pubkey: obligation1, isSigner: false, isWritable: true },
       { pubkey: SYSVAR_CLOCK_PUBKEY, isSigner: false, isWritable: false },
     ];
+    
+    depositReserves.forEach((depositReserves) =>
+    {
+      let depositReserve1= new PublicKey("8PbodeaosQP19SjYFx855UMqWxH2HynZLdBXmsrbac36")//
   
-    depositReserves.forEach((depositReserve) =>
+      //console.log("depositReserve",depositReserve.toBase58())
+      keys.push({
+      pubkey: depositReserve1,
+      isSigner: false,
+      isWritable: false,
+    })}
+  );
+  borrowReserves.forEach((borrowReserve) =>
+  {
+    let borrowReserve1= new PublicKey("8PbodeaosQP19SjYFx855UMqWxH2HynZLdBXmsrbac36")//
+  
+    console.log("borrowReserve",borrowReserve)
+    keys.push({
+      pubkey: borrowReserve1,
+      isSigner: false,
+      isWritable: false,
+    })
+  }
+  );
+   /*  depositReserves.forEach((depositReserve) =>
       keys.push({
         pubkey: depositReserve,
         isSigner: false,
@@ -47,10 +73,10 @@ import {
         isSigner: false,
         isWritable: false,
       })
-    );
+    ); */
     return new TransactionInstruction({
       keys,
-      programId: solendProgramAddress,
+      programId: solendProgramAddress1,
       data,
     });
   };

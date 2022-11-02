@@ -116,7 +116,7 @@ const rentExempt = await Token.getMinBalanceRentForExemptAccount(
 } */
 export async function depositReserveLiquidityAndObligationCollateralMainnet() {
   //Mainnet
- let programId = new PublicKey("7QJJ5GfSvuzxzwfLHdTLPe73amLEKX6bi1oyg2oGymQK");
+ let programId = new PublicKey("7rQhg377Wn13gZ2JHVWV8D96kmXu3gRyHmdb4261q7wb");
  let conUrl='https://api.mainnet-beta.solana.com'
   const connection = new Connection(conUrl, {
     commitment: "finalized",

@@ -26,14 +26,19 @@ export const refreshReserveInstruction = (
   const data = Buffer.alloc(dataLayout.span);
   dataLayout.encode({ instruction: 3}, data);
 
-  const keys = [{ pubkey: reserve, isSigner: false, isWritable: true }];
+  let reserve1= new PublicKey("8PbodeaosQP19SjYFx855UMqWxH2HynZLdBXmsrbac36")
+  let solendProgramAddress1= new PublicKey("So1endDq2YkqhipRh3WViPa8hdiSpxWy6z3Z6tMCpAo")
+  let oracle1= new PublicKey("H6ARHf6YXhGYeQfUzQNGk6rDNnLBQKrenN712K4AQJEG")//
+  let switchboardFeedAddress1= new PublicKey("GvDMxPzN1sCj7L26YDK2HnMRXEQmQ2aemov8YBtPS7vR")//
+
+  const keys = [{ pubkey: reserve1, isSigner: false, isWritable: true }];
 
   if (oracle) {
-    keys.push({ pubkey: oracle, isSigner: false, isWritable: false });
+    keys.push({ pubkey: oracle1, isSigner: false, isWritable: false });
   }
   if (switchboardFeedAddress) {
     keys.push({
-      pubkey: switchboardFeedAddress,
+      pubkey: switchboardFeedAddress1,
       isSigner: false,
       isWritable: false,
     });
@@ -46,7 +51,7 @@ export const refreshReserveInstruction = (
   });
   return new TransactionInstruction({
     keys,
-    programId: solendProgramAddress,
+    programId: solendProgramAddress1,
     data,
   });
 };

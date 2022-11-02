@@ -3,7 +3,7 @@ import { TOKEN_PROGRAM_ID, Token, ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/sp
 import BN from 'bn.js';
 import { privateKey } from "../../account";
 export async function redeemReserveCollateral() {
-  let programId = new PublicKey("B7JQaMhjNDuV55kPAwvz7AfY8BDGLgHvFut2u2Ege6Dq")
+  let programId = new PublicKey("98MvzPgeR6WK5HV4US1icZheF73z6Q1EQLiEkMouYQAk")
   const connection = new Connection('https://api.devnet.solana.com', {
     commitment: "finalized",
   });

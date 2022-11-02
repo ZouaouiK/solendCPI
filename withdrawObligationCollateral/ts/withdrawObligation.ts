@@ -4,25 +4,26 @@ import { refreshReserveInstruction } from "./instructionRefreshReserve";
 import { refreshObligationInstruction } from "./instructionRefreshObligation";
 import { privateKey } from "../../account";
 export async function withdrawObligationCollateralInstruction(){
-let programId=new PublicKey("3r1E3vDZEa6SozMCrw6B4GCSR4ZGJQQCf3YFj8ZLew9Z")
+let programId=new PublicKey("AisCH9PMAswukUTS3siGQtkxna9SWCaNhCLzzzcSB3i")
     const connection = new Connection('https://api.devnet.solana.com', {
         commitment: "finalized",
       });
   
      
     const account = new Account(privateKey);
-    let reverseAddress=new PublicKey("5VVLD7BQp8y3bTgyF5ezm1ResyMTR3PhYsT4iHFU8Sxz");
+    let reverseAddress=new PublicKey("8PbodeaosQP19SjYFx855UMqWxH2HynZLdBXmsrbac36");
       let solendId=new PublicKey("So1endDq2YkqhipRh3WViPa8hdiSpxWy6z3Z6tMCpAo");
-      let priceAddress=new PublicKey("J83w4HKfqxwcq3BEMMkPFSppX3gqekLyLJBexebFVkix");
-      let switchboardFeedAddress=new PublicKey("AdtRGGhmqvom3Jemp5YNrxd9q9unX36BZk1pujkkXijL");
+      let priceAddress=new PublicKey("H6ARHf6YXhGYeQfUzQNGk6rDNnLBQKrenN712K4AQJEG");
+      let switchboardFeedAddress=new PublicKey("GvDMxPzN1sCj7L26YDK2HnMRXEQmQ2aemov8YBtPS7vR");
       let lendingProgramid=new PublicKey("So1endDq2YkqhipRh3WViPa8hdiSpxWy6z3Z6tMCpAo");
-      let sourceCollateral=new PublicKey("J5KGpESS8Zq2MvK4rtL6wKbeMRYZzb6TEzn8qPsZFgGd");
-      let destinationCollateral=new PublicKey("7Nf2nn6vHcoXJPvRCAYJZ8xkGe1bu7S6iMUich9YkdEc");
-      let withdrawReserve=new PublicKey("5VVLD7BQp8y3bTgyF5ezm1ResyMTR3PhYsT4iHFU8Sxz");
-      let obligation=new PublicKey("3jKHf5otiGXgE5p7Pc3CL97eaJQPXpfnb5HVd21c9Zrw");
-      let lendingMarket=new PublicKey("GvjoVKNjBvQcFaSKUW1gTE7DxhSpjHbE69umVR5nPuQp");
-      let lendingMarketAuthority=new PublicKey("EhJ4fwaXUp7aiwvZThSUaGWCaBQAJe3AEaJJJVCn3UCK");
-      let obligationOwner=new PublicKey("7DopuXS9vsbJ9fZqVyEypkNpNY24azW7EgwTXFcSAtpM");
+      
+      let sourceCollateral=new PublicKey("B1ATuYXNkacjjJS78MAmqu8Lu8PvEPt51u4oBasH1m1g");
+      let destinationCollateral=new PublicKey("DwbMjpyio6kW575xBdPkCTFgpMEo2cfWLeGf1iQMfgcb");
+      let withdrawReserve=new PublicKey("8PbodeaosQP19SjYFx855UMqWxH2HynZLdBXmsrbac36");
+      let obligation=new PublicKey("ARY5UYV5ZKSiYKeUR4UWp94cdoTZPRUYVr2omQ8SNqVF");
+      let lendingMarket=new PublicKey("4UpD2fh7xH3VP9QQaXtsS1YY3bxzWhtfpks7FatyKvdY");
+      let lendingMarketAuthority=new PublicKey("DdZR6zRFiUt4S5mg7AV1uKB2z1f1WzcNYCaTEEWPAuby");
+      let obligationOwner=new PublicKey("2pxb5gAv7VxDCq5pDs5P8Euhki6XYDhA9FRiRMd4PxVu");
 
       const refreshReserveIx = refreshReserveInstruction(
       reverseAddress,
@@ -32,7 +33,7 @@ let programId=new PublicKey("3r1E3vDZEa6SozMCrw6B4GCSR4ZGJQQCf3YFj8ZLew9Z")
     );
     const refreshObligationIx = refreshObligationInstruction(
       obligation,
-      [new PublicKey("5VVLD7BQp8y3bTgyF5ezm1ResyMTR3PhYsT4iHFU8Sxz")],
+      [new PublicKey("8PbodeaosQP19SjYFx855UMqWxH2HynZLdBXmsrbac36")],
     [],
       solendId
     );
@@ -77,28 +78,27 @@ let programId=new PublicKey("3r1E3vDZEa6SozMCrw6B4GCSR4ZGJQQCf3YFj8ZLew9Z")
 
 }
 export async function withdrawObligationCollateralInstructionWithMainnet(){
-  let programId=new PublicKey("2kjwKLpiK8tXgwdtjQP4UTRFAHcpyH72VMbzbcRJfqvq")
+  let programId=new PublicKey("AisCH9PMAswukUTS3siGQtkxna9SWCaNhCLzzzcSB3i")
       const connection = new Connection('https://api.mainnet-beta.solana.com', {
           commitment: "finalized",
         });
     
-       
       const account = new Account(privateKey);
        let reverseAddress=new PublicKey("8PbodeaosQP19SjYFx855UMqWxH2HynZLdBXmsrbac36");
         let solendId=new PublicKey("So1endDq2YkqhipRh3WViPa8hdiSpxWy6z3Z6tMCpAo");
         let priceAddress=new PublicKey("H6ARHf6YXhGYeQfUzQNGk6rDNnLBQKrenN712K4AQJEG");
-        let switchboardFeedAddress=new PublicKey("AdtRGGhmqvom3Jemp5YNrxd9q9unX36BZk1pujkkXijL");
+        let switchboardFeedAddress=new PublicKey("GvDMxPzN1sCj7L26YDK2HnMRXEQmQ2aemov8YBtPS7vR");
         let lendingProgramid=new PublicKey("So1endDq2YkqhipRh3WViPa8hdiSpxWy6z3Z6tMCpAo");
 
 
         
         let sourceCollateral=new PublicKey("B1ATuYXNkacjjJS78MAmqu8Lu8PvEPt51u4oBasH1m1g");
-        let destinationCollateral=new PublicKey("4U4A8jE3abhBmKxCVGJpChAN2eGHs3GKbrRMh8fiSznS");
+        let destinationCollateral=new PublicKey("DwbMjpyio6kW575xBdPkCTFgpMEo2cfWLeGf1iQMfgcb");
         let withdrawReserve=new PublicKey("8PbodeaosQP19SjYFx855UMqWxH2HynZLdBXmsrbac36");
-        let obligation=new PublicKey("GQocG58f4hfkgj8Q8hjWLznv4TyMQFqf8Z5XDBjAEQbY");
+        let obligation=new PublicKey("ARY5UYV5ZKSiYKeUR4UWp94cdoTZPRUYVr2omQ8SNqVF");
         let lendingMarket=new PublicKey("4UpD2fh7xH3VP9QQaXtsS1YY3bxzWhtfpks7FatyKvdY");
         let lendingMarketAuthority=new PublicKey("DdZR6zRFiUt4S5mg7AV1uKB2z1f1WzcNYCaTEEWPAuby");
-        let obligationOwner=new PublicKey("vqjaEKwZVk3eMa1c8i8PRmFpWrZLoK6xX1CdBxjFYuv");
+        //let obligationOwner=new PublicKey("2pxb5gAv7VxDCq5pDs5P8Euhki6XYDhA9FRiRMd4PxVu");
   
         const refreshReserveIx = refreshReserveInstruction(
         reverseAddress,

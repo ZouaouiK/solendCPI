@@ -1,17 +1,48 @@
 import { Account, Connection, PublicKey, sendAndConfirmTransaction, SystemProgram, SYSVAR_RENT_PUBKEY, Transaction, TransactionInstruction, LAMPORTS_PER_SOL, SYSVAR_CLOCK_PUBKEY } from "@solana/web3.js";
-import { TOKEN_PROGRAM_ID } from '@solana/spl-token';
+import { ASSOCIATED_TOKEN_PROGRAM_ID, Token, TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { refreshReserveInstruction } from "./instructionRefreshReserve";
 import { refreshObligationInstruction } from "./instructionRefreshObligation";
 import { privateKey } from "../../account";
 
 export async function withdrawObligationCollateralAndRedeemReserveCollateralWithMainnet() {
-  let programId = new PublicKey("4ZsWsYaanMasRxcS8grvyg8N3x8T7fd8Moq6xpnMQPUV")
+  let programId = new PublicKey("DpFAajFXarpyjDJkYuXtsa6VyXB4EjQoPYJhMPRKEwm2")
   const connection = new Connection('https://api.mainnet-beta.solana.com', {
     commitment: "finalized",
   });
 
+  let account = new Account( privateKey)
 
-  const account = new Account(privateKey);
+  let tokenMint = new PublicKey("So11111111111111111111111111111111111111112");
+  let userTokenAccountAddress = await Token.getAssociatedTokenAddress(
+   ASSOCIATED_TOKEN_PROGRAM_ID,
+   TOKEN_PROGRAM_ID,
+   tokenMint,
+   account.publicKey);  
+   const userTokenAccountInfo = await connection.getAccountInfo(
+     userTokenAccountAddress
+   );
+   if (!userTokenAccountInfo) {
+     const createUserTokenAccountIx =
+       Token.createAssociatedTokenAccountInstruction(
+         ASSOCIATED_TOKEN_PROGRAM_ID,
+         TOKEN_PROGRAM_ID,
+         tokenMint,
+         userTokenAccountAddress,
+         account.publicKey,
+         account.publicKey
+       );
+       let createATATxn = await sendAndConfirmTransaction(
+         connection,
+         new Transaction().add(createUserTokenAccountIx),
+         [account],
+       );
+console.log("initialize ata : ", createATATxn)
+  
+   }
+
+console.log("userTokenAccountAddress ",userTokenAccountAddress.toBase58())
+
+  
   let reverseAddress = new PublicKey("8PbodeaosQP19SjYFx855UMqWxH2HynZLdBXmsrbac36");
   let solendId = new PublicKey("So1endDq2YkqhipRh3WViPa8hdiSpxWy6z3Z6tMCpAo");
   let priceAddress = new PublicKey("H6ARHf6YXhGYeQfUzQNGk6rDNnLBQKrenN712K4AQJEG");
@@ -40,7 +71,7 @@ export async function withdrawObligationCollateralAndRedeemReserveCollateralWith
   const refreshObligationIx = refreshObligationInstruction(
     obligation,
     [new PublicKey("8PbodeaosQP19SjYFx855UMqWxH2HynZLdBXmsrbac36")],
-    [new PublicKey("8PbodeaosQP19SjYFx855UMqWxH2HynZLdBXmsrbac36")],
+    [],
     solendId
   );
   const transaction = new Transaction();
@@ -56,7 +87,7 @@ export async function withdrawObligationCollateralAndRedeemReserveCollateralWith
     { pubkey: obligation, isSigner: false, isWritable: true },
     { pubkey: lendingMarket, isSigner: false, isWritable: false },
     { pubkey: lendingMarketAuthority, isSigner: false, isWritable: false },
-    { pubkey: destinationLiquidity, isSigner: false, isWritable: true },
+    { pubkey: userTokenAccountAddress, isSigner: false, isWritable: true },//destinationLiquidity
     { pubkey: reserveCollateralMint, isSigner: false, isWritable: true },
     { pubkey: reserveLiquiditySupply, isSigner: false, isWritable: true },
     { pubkey: obligationOwner, isSigner: true, isWritable: false },

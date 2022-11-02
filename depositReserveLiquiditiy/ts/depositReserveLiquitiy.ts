@@ -3,13 +3,13 @@ import { TOKEN_PROGRAM_ID, Token, ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/sp
 import BN from 'bn.js';
 import { privateKey } from "../../account";
 export async function depositReserveLiquitiy() {
-  let programId = new PublicKey("5msg8QYLooeawWsWFqmaVxPbEo3GeMpD94nd3oQSLLLb")
+  let programId = new PublicKey("87RiKfFkXQLT2x9wx1w8ZePHAxupWuy8Qn6qXfm9ye5Y")
   const connection = new Connection('https://api.mainnet-beta.solana.com', {
     commitment: "finalized",
   });
   let account = new Account(privateKey)
 
-  console.log(" hello solend ", account.publicKey.toBase58());
+  console.log(" hello solend de**** ", account.publicKey.toBase58());
   let tokenMint = new PublicKey("So11111111111111111111111111111111111111112");
    let userTokenAccountAddress = await Token.getAssociatedTokenAddress(
     ASSOCIATED_TOKEN_PROGRAM_ID,
@@ -106,7 +106,7 @@ const rentExempt = await Token.getMinBalanceRentForExemptAccount(
   console.log("TX deposit reserve :", tx)
 }
 export async function depositReserveLiquitiyWithMainnet() {
-  let programId = new PublicKey("AHz5EvYAeHh4mhuMNDqTRgQpttHpmh8Ro44xu8njeQM1")
+  let programId = new PublicKey("87RiKfFkXQLT2x9wx1w8ZePHAxupWuy8Qn6qXfm9ye5Y")
   const connection = new Connection('https://api.mainnet-beta.solana.com', {
     commitment: "finalized",
   });
