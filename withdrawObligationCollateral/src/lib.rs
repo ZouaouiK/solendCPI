@@ -29,7 +29,7 @@ pub fn process_instruction(
     let SYSVAR_CLOCK_PUBKEY = next_account_info(account_info_iter)?;
     let TOKEN_PROGRAM_ID = next_account_info(account_info_iter)?;
     let lending_program_id = next_account_info(account_info_iter)?;
-  let amount =9 as u64;
+  let amount =1000 as u64;
     let mut buf = Vec::new();
     let mut vac_accounts = Vec::new();
     buf.push(9);
