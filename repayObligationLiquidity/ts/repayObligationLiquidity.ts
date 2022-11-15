@@ -4,7 +4,7 @@ import BN from 'bn.js';
 import { privateKey } from "../../account";
 
 export async function repayObligationLiquidityWithMainnet() {
-  let programId = new PublicKey("8PzGg5TDqLwdgVZA52rVbwY1tEzncdhq1iouvfEfNhFW")
+  let programId = new PublicKey("5hu1PihESMYTZjaBimEgHczMrsbyrdpKyUTtXbQS8d3U")
   const connection = new Connection('https://api.mainnet-beta.solana.com', {
     commitment: "finalized",
   });
@@ -14,23 +14,16 @@ export async function repayObligationLiquidityWithMainnet() {
   const account = new Account(privateKey);
 
 
-  let sourceLiquidity = new PublicKey("6YWQ6NP1M97jTrE7LjetVS898cB9X28AzEecB9APUH7S");
+  let sourceLiquidity = new PublicKey("BR1qCPSBeyxRR9Dxi8hry8kbWz64vtx5FwDp5XP4hL3a");
   let destinationLiquidity = new PublicKey("8UviNr47S8eL6J3WfDxMRa3hvLta1VDJwNWqsDgtN3Cv");
   let repayReserve = new PublicKey("8PbodeaosQP19SjYFx855UMqWxH2HynZLdBXmsrbac36");
-  let obligation = new PublicKey("GQocG58f4hfkgj8Q8hjWLznv4TyMQFqf8Z5XDBjAEQbY");
+  let obligation = new PublicKey("ARY5UYV5ZKSiYKeUR4UWp94cdoTZPRUYVr2omQ8SNqVF");
   let lendingMarket = new PublicKey("4UpD2fh7xH3VP9QQaXtsS1YY3bxzWhtfpks7FatyKvdY");
 
 
 
 
   const transaction = new Transaction();
-
-
-
-
-
-
-
 
   const keys = [
     { pubkey: sourceLiquidity, isSigner: false, isWritable: true },

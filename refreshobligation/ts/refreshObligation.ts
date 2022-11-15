@@ -3,8 +3,9 @@ import { TOKEN_PROGRAM_ID, Token, ASSOCIATED_TOKEN_PROGRAM_ID } from '@solana/sp
 import BN from 'bn.js';
 import { privateKey } from "../../account";
 export async function refreshObligation() {
-  let programId = new PublicKey("6MA7PEj1gUX1J8ja9tnZGy5WVQdTjgLZ47UTdz7Rt1N2")
-  const connection = new Connection('https://api.devnet.solana.com', {
+  let programId = new PublicKey("ESjvtUTAPkG53NF72L4VPFeuH1LA8sJCvRHa6vC9eR3W")
+  let conUrl='https://api.mainnet-beta.solana.com'
+  const connection = new Connection(conUrl, {
     commitment: "finalized",
   });
   let account = new Account(privateKey)
@@ -48,16 +49,16 @@ const rentExempt = await Token.getMinBalanceRentForExemptAccount(
   connection
 );
 
-let userCollateralAccountAddress = new PublicKey("DymaqucGEGZSDc1V8wgbCyDUphRcWm17qmhc3sLhRXtF");
-  let reserveAddress = new PublicKey("5VVLD7BQp8y3bTgyF5ezm1ResyMTR3PhYsT4iHFU8Sxz");
-  let reserveLiquidityAddress = new PublicKey("furd3XUtjXZ2gRvSsoUts9A5m8cMJNqdsyR2Rt8vY9s");
-  let reserveCollateralMintAddress = new PublicKey("FzwZWRMc3GCqjSrcpVX3ueJc6UpcV6iWWb7ZMsTXE3Gf");
-  let lendingMarketAddress = new PublicKey("GvjoVKNjBvQcFaSKUW1gTE7DxhSpjHbE69umVR5nPuQp");
-  let lendingMarketAuthorityAddress = new PublicKey("EhJ4fwaXUp7aiwvZThSUaGWCaBQAJe3AEaJJJVCn3UCK");
+let userCollateralAccountAddress = new PublicKey("DwbMjpyio6kW575xBdPkCTFgpMEo2cfWLeGf1iQMfgcb");
+  let reserveAddress = new PublicKey("8PbodeaosQP19SjYFx855UMqWxH2HynZLdBXmsrbac36");
+  let reserveLiquidityAddress = new PublicKey("8UviNr47S8eL6J3WfDxMRa3hvLta1VDJwNWqsDgtN3Cv");
+  let reserveCollateralMintAddress = new PublicKey("5h6ssFpeDeRbzsEHDbTQNH7nVGgsKrZydxdSTnLm6QdV");
+  let lendingMarketAddress = new PublicKey("4UpD2fh7xH3VP9QQaXtsS1YY3bxzWhtfpks7FatyKvdY");
+  let lendingMarketAuthorityAddress = new PublicKey("DdZR6zRFiUt4S5mg7AV1uKB2z1f1WzcNYCaTEEWPAuby");
   let transferAuthority = account.publicKey;
-  let solendProgramID = new PublicKey("ALend7Ketfx5bxh6ghsCDXAoDrhvEmsXT3cynB6aPLgx");
+  let solendProgramID = new PublicKey("So1endDq2YkqhipRh3WViPa8hdiSpxWy6z3Z6tMCpAo");
   // let liquidityAmount=new BN("1000");
-  let liquidityAmount = 100000;
+  let liquidityAmount = 1000;
 
   let create_account = new Account();
   let [authority, nonce] = await PublicKey.findProgramAddress(

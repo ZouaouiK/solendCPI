@@ -3,7 +3,7 @@ import {  TOKEN_PROGRAM_ID } from '@solana/spl-token';
 import { refreshReserveInstruction } from "./instructionRefreshReserve";
 import { refreshObligationInstruction } from "./instructionRefreshObligation";
 import { privateKey } from "../../account";
-export async function withdrawObligationCollateralInstructionDevnet(){
+export async function withdrawObligationCollateralInstruction(){
 let programId=new PublicKey("AisCH9PMAswukUTS3siGQtkxna9SWCaNhCLzzzcSB3i")
     const connection = new Connection('https://api.devnet.solana.com', {
         commitment: "finalized",
